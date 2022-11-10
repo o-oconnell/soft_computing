@@ -135,7 +135,7 @@ def run():
 
     i = 0
     while i < len(x_train):
-        backpropagate(x_train[i].reshape((28*28, 1)), y_train[i], learning_rate=0.03)
+        backpropagate(x_train[i].reshape((28*28, 1)), y_train[i], learning_rate=0.4)
         i += 1
 
                 
