@@ -129,9 +129,6 @@ def backpropagate(inp, desired, learning_rate):
         biases[len(biases)-i] -= delta_w0
 
 def run():
-    stochastic_sample_size = 10
-            
-    numpy.random.shuffle(x_train)
 
     i = 0
     while i < len(x_train):
