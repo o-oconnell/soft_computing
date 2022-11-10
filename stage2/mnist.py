@@ -119,14 +119,14 @@ def backpropagate(inp, desired, learning_rate):
 
         # Update weight (w = w - learning_rate * dC/dWjk
         # = w - alpha * s_j * x_i)
-        weights[len(weights)-i+1] +=  numpy.matmul(
+        weights[len(weights)-i+1] -=  learning_rate * numpy.matmul(
             all_activations[len(all_activations)-i+1],
                                                    numpy.transpose(si))
 
         # b = b - learning_rate * dC / dB
         # the rate of change with respect to the bias = error (si)
         delta_w0 = learning_rate * si
-        biases[len(biases)-i] += delta_w0
+        biases[len(biases)-i] -= delta_w0
 
 def run():
     stochastic_sample_size = 10
@@ -135,10 +135,8 @@ def run():
 
     i = 0
     while i < len(x_train):
-        for j in range(0, stochastic_sample_size):
-            backpropagate(x_train[i + j].reshape((28*28, 1)), y_train[i + j], learning_rate=0.3)
-
-        i += stochastic_sample_size
+        backpropagate(x_train[i].reshape((28*28, 1)), y_train[i], learning_rate=0.03)
+        i += 1
 
                 
     n_correct = 0
