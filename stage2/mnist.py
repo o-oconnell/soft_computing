@@ -1,5 +1,6 @@
 from keras.datasets import mnist
 import numpy
+import time
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 (x_train, x_test) = (x_train / 255.0, x_test / 255.0)
@@ -9,6 +10,7 @@ biases = []
 weights = []
 
 # Step 0
+
 for i in range(1, len(dimensions)):
     weights.append(2 * numpy.random.random_sample((dimensions[i], dimensions[i-1])) - 1)
         
@@ -98,12 +100,15 @@ def backpropagate(inp, desired, learning_rate):
                         numpy.transpose(
                         all_activations[len(all_activations)-2]))
 
+    weight_changes = []
+    bias_changes = []
+    
     # update last layer of weights
-    weights[len(weights)-1] -= delta_w * learning_rate
+    weight_changes.insert(0, delta_w)
 
     # bias correction term
-    delta_w0 = learning_rate * sk
-    biases[len(biases)-1] -= delta_w0
+    delta_w0 = sk
+    bias_changes.insert(0, delta_w0)
 
     # move the error backwards and compute remaining weight updates
     for i in range(2, len(dimensions)):
@@ -114,28 +119,58 @@ def backpropagate(inp, desired, learning_rate):
         
         si = s_in * binary_sigmoid_derivative(
             f_in_tot[len(f_in_tot)-i])
-        
-        s.insert(0,si)
+
+        s.insert(0,si) # to compute errors of prior layer correctly
 
         # Update weight (w = w - learning_rate * dC/dWjk
         # = w - alpha * s_j * x_i)
-        weights[len(weights)-i+1] -=  learning_rate * numpy.matmul(
-            all_activations[len(all_activations)-i+1],
-                                                   numpy.transpose(si))
+        weight_changes.insert(0, numpy.matmul(si, numpy.transpose(all_activations[len(all_activations)-i-1])))
 
         # b = b - learning_rate * dC / dB
         # the rate of change with respect to the bias = error (si)
-        delta_w0 = learning_rate * si
-        biases[len(biases)-i] -= delta_w0
+        delta_w0 = si
+        bias_changes.insert(0, delta_w0)
+
+    for i in range(0, len(weight_changes)):
+        weights[i] -= learning_rate * weight_changes[i]
+
+    for i in range(0, len(bias_changes)):
+        biases[i] -= learning_rate * bias_changes[i]
 
 def run():
 
+    # Issues with our algorithm:
+    # 1. We update the weights as we go instead of waiting until all of the errors have been calculated. This is a problem because we need the original weights in order to backpropagate the error.
+    # For a hidden layer, the error S_in_j = sum over k of Sk * Wjk, so if we've changed Wjk prior to calculating S_in_j, we're not backpropagating the error according to the proof.
+
+    # 2. Our y_train and y_test vectors were encoded as single integers. We needed an array of 10 values with a single one in order to execute the algorithm properly.
+
+    # 3. Kind of an issue (still have not fixed): we are initializing the weights to small random values from a uniform distribution. It would be preferable to initialize them from a standard normal distribution as values would be clustered around zero and less likely to saturate.
+
+    x_train_0 = []
+    x_test_0 = []
+    for i in range(0, len(x_train)):
+        x_train_0.append(x_train[i].reshape((28*28, 1)))
+
+    for i in range(0, len(x_test)):
+        x_test_0.append(x_test[i].reshape((28*28, 1)))
+
+    y_train_0 = []
+    y_test_0 = []
+    for i in range(0, len(y_train)):
+        add = numpy.zeros((10, 1))
+        add[y_train[i]] = 1.0
+        y_train_0.append(add)
+    for i in range(0, len(y_test)):
+        add = numpy.zeros((10, 1))
+        add[y_test[i]] = 1.0
+        y_test_0.append(add)
+
     i = 0
     while i < len(x_train):
-        backpropagate(x_train[i].reshape((28*28, 1)), y_train[i], learning_rate=0.04)
+        backpropagate(x_train[i].reshape((28*28, 1)), y_train_0[i], learning_rate=0.03)
         i += 1
 
-                
     n_correct = 0
     for k in range(0, len(x_test)):
         n_correct += check_correctness(x_test[k].reshape((28*28, 1)), y_test[k])
@@ -147,3 +182,5 @@ def run():
 
         
 run()
+
+
