@@ -85,6 +85,14 @@ def backpropagate(inp, desired, learning_rate):
         current_activation = binary_sigmoid(f_in)
         all_activations.append(current_activation)
 
+    """
+    wantedVal = numpy.argmax(desired)
+    max_idx = numpy.argmax(current_activation)
+
+    if(wantedVal == max_idx):
+        return None
+        """
+        
         
     # Backpropagation of error
     # Step 6-8: backpropagation of error and updating of weights/biases
@@ -165,11 +173,16 @@ def run():
         add = numpy.zeros((10, 1))
         add[y_test[i]] = 1.0
         y_test_0.append(add)
-
-    i = 0
-    while i < len(x_train):
-        backpropagate(x_train[i].reshape((28*28, 1)), y_train_0[i], learning_rate=0.03)
-        i += 1
+    
+    startTime = time.time()
+    for rounds in range(100):
+        i = 0
+        while i < len(x_train):
+            backpropagate(x_train[i].reshape((28*28, 1)), y_train_0[i], learning_rate=0.03)
+            i += 1
+        print("Completed round " + str(rounds))
+    print("Test took " + str(time.time() - startTime) + " seconds")
+    
 
     n_correct = 0
     for k in range(0, len(x_test)):
