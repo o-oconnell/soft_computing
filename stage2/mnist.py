@@ -85,13 +85,12 @@ def backpropagate(inp, desired, learning_rate):
         current_activation = binary_sigmoid(f_in)
         all_activations.append(current_activation)
 
-    """
+    #Only BP if the model got it wrong
     wantedVal = numpy.argmax(desired)
     max_idx = numpy.argmax(current_activation)
 
     if(wantedVal == max_idx):
         return None
-        """
         
         
     # Backpropagation of error
