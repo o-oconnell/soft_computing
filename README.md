@@ -6,7 +6,7 @@ This is a manual implementation of backpropagation using the MNIST dataset for C
 
 ### Network 1
 
-Our first network achieved approximately 87% accuracy using a MSE cost function, sigmoid activation functions, and layers of 784, 30 (hidden), and 10 neurons. To run the network, make sure that Python >= 3.9.7, Numpy >= 1.20.3, Keras >= 2.9.0, and TensorFlow >= 2.9.1 are installed. Execute these commands:
+Our first network achieved approximately 87% accuracy using a MSE cost function, sigmoid activation functions, and layers of 784, 100 (hidden), and 10 neurons. To run the network, make sure that Python >= 3.9.7, Numpy >= 1.20.3, Keras >= 2.9.0, and TensorFlow >= 2.9.1 are installed. Execute these commands:
 
 `git clone https://github.com/o-oconnell/soft_computing.git`
 
