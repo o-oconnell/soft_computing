@@ -1,17 +1,20 @@
 # Manual Implementation of Backpropagation
 
-This is a manual implementation of backpropagation using the MNIST dataset for CSE 464 Soft Computing at New Mexico Tech. It is a three layer neural network with sigmoid activation functions on all neurons after the input layer.
+This is a manual implementation of backpropagation using the MNIST dataset for CSE 464 Soft Computing at New Mexico Tech.
 
-This implementation achieves an accuracy of around 87%.
+## How to reproduce our results
 
+### Network 1
 
+Our first network achieved approximately 87% accuracy using a MSE cost function, sigmoid activation functions, and layers of 784, 30 (hidden), and 10 neurons. To run the network, make sure that Python >= 3.9.7, Numpy >= 1.20.3, Keras >= 2.9.0, and TensorFlow >= 2.9.1 are installed. Execute these commands:
 
-The current implementation has a list of fixed/to-fix issues:
+`git clone https://github.com/o-oconnell/soft_computing.git`
 
-1. We updated the weights continuously instead of waiting until all of the errors have been calculated. This is a problem because we need the original weights in order to backpropagate the error.
-For a hidden layer, the error S_in_j = sum over k of Sk * Wjk, so if we've changed Wjk prior to calculating S_in_j, we're not backpropagating the error according to the proof.
+`cd soft_computing`
 
-2. Our y_train and y_test vectors were encoded as single integers. We needed an array of 10 values with a single one in order to execute the algorithm properly.
+`git reset --HARD 903b16eec0f6f5847415d6bf9fc9856aaac0c6e8`
 
-3. Kind of an issue (still have not fixed): we are initializing the weights to small random values from a uniform distribution. It would be preferable to initialize them from a standard normal distribution as values would be clustered around zero and less likely to saturate.
+`python mnist.py`
+
+### Network 2
 
