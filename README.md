@@ -77,6 +77,22 @@ out of
 
 ### Number of Rounds Control
 
-By modifying the code, it is possible to change how many times the training set it fed through the network. This is done by changing the numerical value in 182 of mnist.py, or line 189 of modified_bp.py. The default number of rounds is 1.
+By modifying the code, it is possible to change how many times the training set it fed through the network. This is done by changing the numerical value on line 189 of modified_bp.py. The default number of rounds is 1.
 
 
+### Network 3
+
+Using the cross-entropy cost function with L2 regularization we achieved a signiificant improvement over network 2. You can get the correct version of `mnist.py` using `git reset --hard 044747e7fd10f5fc39d9813beaf91848b86171de`.
+
+With a seeded random number generator we recorded results:
+
+`time python mnist.py`
+
+`Number of correctly classified test images after training with 60000 images:
+9422
+out of
+10000`
+
+`real	0m23.874s
+user	2m12.152s
+sys	0m1.104s`
