@@ -10,6 +10,7 @@ biases = []
 weights = []
 
 numpy.random.seed(0)
+
 for i in range(1, len(dimensions)):
     weights.append(2 * numpy.random.random_sample((dimensions[i], dimensions[i-1])) - 1)
         

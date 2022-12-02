@@ -16,5 +16,14 @@ Our first network achieved approximately 87% accuracy using a MSE cost function,
 
 `python mnist.py`
 
+
+On a 64-bit Linux computer with 6 Intel Core i7 1.8 GHz cores, the output (with `numpy.random.seed(0)`) is:
+
+`Number of correctly classified test images after training with 60000 images:
+8928
+out of
+10000`
+
+
 ### Network 2
 
