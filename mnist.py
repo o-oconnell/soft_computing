@@ -81,11 +81,11 @@ def backpropagate(inp, desired, learning_rate):
 
     # MSE COST:
     # ---------------------
-    sk = (all_activations[len(all_activations)-1] - desired) * binary_sigmoid_derivative(f_in_tot[len(f_in_tot)-1])
-    s.append(sk)
-    delta_w = numpy.matmul(sk,
-                        numpy.transpose(
-                        all_activations[len(all_activations)-2]))
+    # sk = (all_activations[len(all_activations)-1] - desired) * binary_sigmoid_derivative(f_in_tot[len(f_in_tot)-1])
+    # s.append(sk)
+    # delta_w = numpy.matmul(sk,
+    #                     numpy.transpose(
+    #                     all_activations[len(all_activations)-2]))
     # ----------------------
 
     # For the cross-entropy cost, we have:
@@ -103,11 +103,11 @@ def backpropagate(inp, desired, learning_rate):
 
     # CROSS-ENTROPY COST
     # -----------------
-    # sk = (all_activations[len(all_activations)-1] - desired) 
-    # s.append(sk)
-    # delta_w = numpy.matmul(sk,
-    #                     numpy.transpose(
-    #                     all_activations[len(all_activations)-2]))
+    sk = (all_activations[len(all_activations)-1] - desired) 
+    s.append(sk)
+    delta_w = numpy.matmul(sk,
+                        numpy.transpose(
+                        all_activations[len(all_activations)-2]))
     # -----------------
 
     weight_changes = []
