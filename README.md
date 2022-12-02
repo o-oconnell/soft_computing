@@ -67,7 +67,7 @@ Number of correctly classified test images after training with 60000 images:
 out of
 10000
 
-This is compared to `mnist.py`, which has the following output:
+This is compared to `mnist.py` (network 2), which has the following output:
 Completed round 0
 Training took 16.20714521408081 seconds
 Number of correctly classified test images after training with 60000 images:
