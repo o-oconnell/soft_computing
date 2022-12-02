@@ -52,3 +52,12 @@ user	1m44.624s
 sys	0m1.048s`
 
 
+### Modified Network 2
+
+modified_bp.py is a modified version of network 2. This version only performs the BP step on an input if the network guesses incorrectly on said input.
+
+### Number of Rounds Control
+
+By modifying the code, it is possible to change how many times the training set it fed through the network. This is done by changing the numerical value in 182 of mnist.py, or line 189 of modified_bp.py. The default number of rounds is 1.
+
+
