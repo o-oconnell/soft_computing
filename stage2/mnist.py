@@ -173,6 +173,7 @@ def run():
         add[y_test[i]] = 1.0
         y_test_0.append(add)
     
+    #Train the network a set # of times
     startTime = time.time()
     for rounds in range(100):
         i = 0
