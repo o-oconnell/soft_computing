@@ -45,9 +45,9 @@ On a 64-bit computer with 12 Intel Core i7 2.6 GHz cores and no GPU, the output 
 `Number of correctly classified test images after training with 60000 images:
 9358
 out of
-10000
+10000`
 
-real	0m19.259s
+`real	0m19.259s
 user	1m44.624s
 sys	0m1.048s`
 
