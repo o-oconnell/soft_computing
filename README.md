@@ -18,7 +18,7 @@ Our first network achieved approximately 89% accuracy using a MSE cost function,
 
 `python mnist.py`
 
-On a 64-bit computer with 12 Intel Core i7 2.6 GHz cores and no GPU, the output (with `numpy.random.seed(0)` for the random weight initializations) is:
+On a 64-bit computer with 12 Intel Core i7-10750H  2.6 GHz cores and no GPU, the output (with `numpy.random.seed(0)` for the random weight initializations) is:
 
 `Number of correctly classified test images after training with 60000 images:
 8928
@@ -40,7 +40,7 @@ Our second network achieves near 94% accuracy using a cross-entropy cost functio
 
 `python mnist.py`
 
-On a 64-bit computer with 12 Intel Core i7 2.6 GHz cores and no GPU, the output of `time mnist.py` (with `numpy.random.seed(0)` for the random weight initializations) is:
+On a 64-bit computer with 12 Intel Core i7-10750H 2.6 GHz cores and no GPU, the output of `time mnist.py` (with `numpy.random.seed(0)` for the random weight initializations) is:
 
 `Number of correctly classified test images after training with 60000 images:
 9358
