@@ -18,7 +18,7 @@ Our first network achieved approximately 89% accuracy using a MSE cost function,
 
 `python mnist.py`
 
-On a 64-bit computer with 12 Intel Core i7 2.6 GHz cores and no GPU, the output (with `numpy.random.seed(0)` for the random weight initializations) is:
+On a 64-bit computer with 12 Intel Core i7-10750H  2.6 GHz cores and no GPU, the output (with `numpy.random.seed(0)` for the random weight initializations) is:
 
 `Number of correctly classified test images after training with 60000 images:
 8928
@@ -40,7 +40,7 @@ Our second network achieves near 94% accuracy using a cross-entropy cost functio
 
 `python mnist.py`
 
-On a 64-bit computer with 12 Intel Core i7 2.6 GHz cores and no GPU, the output of `time mnist.py` (with `numpy.random.seed(0)` for the random weight initializations) is:
+On a 64-bit computer with 12 Intel Core i7-10750H 2.6 GHz cores and no GPU, the output of `time mnist.py` (with `numpy.random.seed(0)` for the random weight initializations) is:
 
 `Number of correctly classified test images after training with 60000 images:
 9358
@@ -50,5 +50,33 @@ out of
 `real	0m19.259s
 user	1m44.624s
 sys	0m1.048s`
+
+
+### Modified Network 2
+
+modified_bp.py is a modified version of network 2. This version only performs the BP step on an input if the network guesses incorrectly on said input.
+
+The repository can be brought to the state it was in during this testing using the command `git reset --hard 181520e6c247aa040576e6ce5b0d1517234bbc15`
+The program can then be run using `python modified_bp.py`
+
+On a 64-bit computer with a Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz and no GPU, the output of `modified_bp.py` (with `numpy.random.seed(0)` for the random weight initializations) is:
+Completed round 0
+Training took 5.745041370391846 seconds
+Number of correctly classified test images after training with 60000 images:
+9153
+out of
+10000
+
+This is compared to `mnist.py` (network 2), which has the following output:
+Completed round 0
+Training took 16.20714521408081 seconds
+Number of correctly classified test images after training with 60000 images:
+9358
+out of
+10000
+
+### Number of Rounds Control
+
+By modifying the code, it is possible to change how many times the training set it fed through the network. This is done by changing the numerical value in 182 of mnist.py, or line 189 of modified_bp.py. The default number of rounds is 1.
 
 

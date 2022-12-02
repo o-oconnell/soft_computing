@@ -9,7 +9,8 @@ dimensions = [28*28, 100, 10]
 biases = []
 weights = []
 
-numpy.random.seed(1)
+numpy.random.seed(0)
+
 for i in range(1, len(dimensions)):
     weights.append(2 * numpy.random.random_sample((dimensions[i], dimensions[i-1])) - 1)
         
@@ -54,7 +55,7 @@ def backpropagate(inp, desired, learning_rate):
         print("Incorrect input shape, expected 1d column array with " + str(dimensions[0]) + " entries.")
 
         
-    # Fausett steps 2-5: feedforward and save the activations / input sums for backpropagation
+    # Step 2-5: feedforward and save the activations / input sums for backpropagation
     current_activation = inp
     all_activations, f_in_tot = [], []
     all_activations.append(inp)
@@ -63,9 +64,16 @@ def backpropagate(inp, desired, learning_rate):
         f_in_tot.append(f_in)
         current_activation = binary_sigmoid(f_in)
         all_activations.append(current_activation)
+        
+    #Only BP if the model got it wrong
+    wantedVal = numpy.argmax(desired)
+    max_idx = numpy.argmax(current_activation)
+
+    if(wantedVal == max_idx):
+        return None
 
     # Backpropagation of error
-    # Fausett steps 6-8: backpropagation of error and updating of weights/biases
+    # Step 6-8: backpropagation of error and updating of weights/biases
 
     # Array to store all errors as we move backward through the network
     s = []
@@ -98,31 +106,16 @@ def backpropagate(inp, desired, learning_rate):
 
     # Since the sigmoid function has the property that sigmoid_prime(x) = sigmoid(x)(1-sigmoid(x)), we get:
     # = a_p * (a - y)
-    # (similarly to MSE, dC/db = (a-y) = sk below)
+    # (similarly to the quadratic, dC/db = (a-y) = sk below)
 
     # CROSS-ENTROPY COST
     # -----------------
-    # sk = (all_activations[len(all_activations)-1] - desired) 
-    # s.append(sk)
-    # delta_w = numpy.matmul(sk,
-    #                     numpy.transpose(
-    #                     all_activations[len(all_activations)-2]))
-    # -----------------
-
-    # CROSS-ENTROPY COST WITH REGULARIZATION
-    # -----------------
-    # Add lambda / n_inputs * w to the update, where w is the final layer of weights
-    # This means that deltaW becomes:
-    # -learning_rate * (dC/dW + lambda/n_inputs * w)
-    
     sk = (all_activations[len(all_activations)-1] - desired) 
     s.append(sk)
     delta_w = numpy.matmul(sk,
                         numpy.transpose(
                         all_activations[len(all_activations)-2]))
     # -----------------
-
-
 
     weight_changes = []
     bias_changes = []
@@ -156,12 +149,20 @@ def backpropagate(inp, desired, learning_rate):
         bias_changes.insert(0, delta_w0)
 
     for i in range(0, len(weight_changes)):
-        weights[i] -= learning_rate * (weight_changes[i] + 1.0/len(x_train) * weights[i])
+        weights[i] -= learning_rate * weight_changes[i]
 
     for i in range(0, len(bias_changes)):
         biases[i] -= learning_rate * bias_changes[i]
 
 def run():
+    # Issues with our algorithm:
+    # 1. We updated the weights as we go instead of waiting until all of the errors have been calculated. This is a problem because we need the original weights in order to backpropagate the error.
+    # For a hidden layer, the error S_in_j = sum over k of Sk * Wjk, so if we've changed Wjk prior to calculating S_in_j, we're not backpropagating the error according to the proof.
+
+    # 2. Our y_train and y_test vectors were encoded as single integers. We needed an array of 10 values with a single one in order to execute the algorithm properly.
+
+    # 3. Kind of an issue (still have not fixed): we are initializing the weights to small random values from a uniform distribution. It would be preferable to initialize them from a standard normal distribution as values would be clustered around zero and less likely to saturate.
+
     # Reshape our images to suit a 784-neuron input layer
     x_train_0 = []
     x_test_0 = []
