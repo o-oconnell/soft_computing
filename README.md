@@ -12,7 +12,7 @@ Our first network achieved approximately 87% accuracy using a MSE cost function,
 
 `cd soft_computing`
 
-`git reset --hard 903b16eec0f6f5847415d6bf9fc9856aaac0c6e8`
+`git reset --hard d0d028a3c9319fcfa2be7ecd71d66ae6e293ab4b`
 
 `python mnist.py`
 
